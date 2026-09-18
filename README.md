@@ -46,7 +46,7 @@ Use Linux, macOS, or Ubuntu under WSL2 on Windows. The Compact compiler has no n
 
 ```bash
 curl --proto '=https' --tlsv1.2 -LsSf https://github.com/midnightntwrk/compact/releases/latest/download/compact-installer.sh | sh
-export PATH="$HOME/.compact/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.compact/bin:$PATH"
 compact update 0.31.1
 compact --version
 compact compile --version

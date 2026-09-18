@@ -26,8 +26,9 @@ jobs:
       - name: Install official Compact toolchain
         run: |
           curl --proto '=https' --tlsv1.2 -LsSf https://github.com/midnightntwrk/compact/releases/latest/download/compact-installer.sh | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
           echo "$HOME/.compact/bin" >> "$GITHUB_PATH"
-          "$HOME/.compact/bin/compact" update 0.31.1
+          "$HOME/.local/bin/compact" update 0.31.1
       - name: Compile contracts with proving and verification keys
         run: |
           set -o pipefail
@@ -37,7 +38,7 @@ jobs:
       - name: Typecheck and test compiled contract
         run: |
           set -o pipefail
-          (npm run build; npm test) 2>&1 | tee docs/evidence/tests.txt
+          (npm run build && npm test) 2>&1 | tee docs/evidence/tests.txt
       - name: Preserve generated artifacts and genuine logs
         run: |
           git config user.name 'github-actions[bot]'
