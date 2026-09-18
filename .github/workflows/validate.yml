@@ -1,0 +1,57 @@
+name: Compile and validate QuietCount
+on:
+  push:
+    paths-ignore:
+      - 'managed/**'
+      - 'docs/evidence/**'
+      - 'docs/deployment*.json'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: quietcount-validation-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install pinned dependencies
+        run: npm ci
+      - name: Install official Compact toolchain
+        run: |
+          curl --proto '=https' --tlsv1.2 -LsSf https://github.com/midnightntwrk/compact/releases/latest/download/compact-installer.sh | sh
+          echo "$HOME/.compact/bin" >> "$GITHUB_PATH"
+          "$HOME/.compact/bin/compact" update 0.31.1
+      - name: Compile contracts with proving and verification keys
+        run: |
+          set -o pipefail
+          mkdir -p docs/evidence
+          (node --version; compact --version; compact compile --version; npm run compile:hello; npm run compile) 2>&1 | tee docs/evidence/compile.txt
+          find managed -maxdepth 3 -type f
+      - name: Typecheck and test compiled contract
+        run: |
+          set -o pipefail
+          (npm run build; npm test) 2>&1 | tee docs/evidence/tests.txt
+      - name: Preserve generated artifacts and genuine logs
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add managed docs/evidence/compile.txt docs/evidence/tests.txt
+          if ! git diff --cached --quiet; then
+            git commit -m 'build: preserve compiled circuits, keys, and validation evidence [skip ci]'
+            git push
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quietcount-validation
+          path: |
+            managed/
+            docs/evidence/
+          retention-days: 7
