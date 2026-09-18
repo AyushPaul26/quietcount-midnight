@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+.midnight-state.json*
+.midnight-wallet-state/
+.quietcount-secrets.json
+.quietcount-backup-private.pem
+quietcount-state/
+hello-world-state/
+*.log
+.DS_Store

@@ -1,0 +1,7 @@
+QuietCount uses networking, wallet, and deployment infrastructure adapted from
+midnightntwrk/create-mn-app 0.5.1, copyright Midnight Foundation, Apache-2.0.
+Source: https://github.com/midnightntwrk/create-mn-app
+The original deployment template has been modified to supply private witnesses,
+avoid recovery-phrase output, record public evidence, and preserve encrypted backups.
+The contract and test suite are written for QuietCount. Runtime simulation patterns
+follow Midnight's Apache-2.0 example-counter and example-bboard repositories.
