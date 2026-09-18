@@ -30,6 +30,7 @@ jobs:
           echo "$HOME/.compact/bin" >> "$GITHUB_PATH"
           "$HOME/.local/bin/compact" update 0.31.1
       - name: Compile contracts with proving and verification keys
+        id: compile
         run: |
           set -o pipefail
           mkdir -p docs/evidence
@@ -40,6 +41,7 @@ jobs:
           set -o pipefail
           (npm run build && npm test) 2>&1 | tee docs/evidence/tests.txt
       - name: Preserve generated artifacts and genuine logs
+        if: ${{ always() && steps.compile.outcome == 'success' }}
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

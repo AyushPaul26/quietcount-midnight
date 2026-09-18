@@ -7,11 +7,11 @@
  */
 import * as fs from 'node:fs';
 import { loadOrganizerState, loadStoragePassword } from './secrets';
-import { witnesses } from './witnesses';
+import { witnesses, type QuietCountPrivateState } from './witnesses';
 import * as path from 'node:path';
 import { resolveNetwork, getOrCreateWallet, recordDeployment } from './network';
 import { createWallet, persistWalletState, unshieldedToken, type WalletContext } from './wallet';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 import { WebSocket } from 'ws';
 import * as Rx from 'rxjs';
 
@@ -87,12 +87,22 @@ if (!fs.existsSync(contractPath)) {
   process.exit(1);
 }
 
-const HelloWorld = await import(pathToFileURL(contractPath).href);
+async function loadCompiledContract() {
+  if (IS_HELLO_WORLD) {
+    const { Contract } = await import('../managed/hello-world/contract/index.js');
+    return CompiledContract.make('hello-world', Contract<{}>).pipe(
+      CompiledContract.withVacantWitnesses,
+      CompiledContract.withCompiledFileAssets(zkConfigPath),
+    );
+  }
+  const { Contract } = await import('../managed/counter/contract/index.js');
+  const contract = CompiledContract.make('counter', Contract<QuietCountPrivateState>);
+  return CompiledContract.withCompiledFileAssets(
+    CompiledContract.withWitnesses(contract, witnesses), zkConfigPath,
+  );
+}
 
-const compiledContract = CompiledContract.make(CONTRACT_NAME, HelloWorld.Contract).pipe(
-  CompiledContract.withWitnesses(IS_HELLO_WORLD ? {} : witnesses),
-  CompiledContract.withCompiledFileAssets(zkConfigPath),
-);
+const compiledContract = await loadCompiledContract();
 
 // ─── Providers ─────────────────────────────────────────────────────────────────
 
