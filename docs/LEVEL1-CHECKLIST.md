@@ -7,13 +7,13 @@ Active period: September Challenge, displayed as 1 September–1 October. The su
 - [x] Custom contract: public ledger state, private witness, deliberate `disclose()`, privacy comment.
 - [x] README with initial product idea, privacy model, stack, prerequisites, setup, and test commands.
 - [x] At least three meaningful tests written against generated contract execution.
-- [ ] Genuine successful `compact compile` output.
-- [ ] Passing test execution and typecheck.
-- [ ] Generated `managed/` circuits and keys checked in.
+- [x] Genuine successful `compact compile` output.
+- [x] Passing test execution and typecheck (six compiled-contract tests passed locally).
+- [x] Generated `managed/` circuits and keys checked in.
 - [ ] Custom contract deployed to Preview/Preprod and confirmed address in README.
 - [ ] Compile screenshot showing circuit list.
 - [ ] Deployment screenshot showing custom contract address.
-- [ ] At least five meaningful commits published.
+- [x] At least five meaningful commits published.
 - [ ] Repository selected in Rise In and submitted for the September Challenge.
 - [ ] Submission status and repository verified in the Rise In UI.
 

@@ -34,8 +34,7 @@ jobs:
         run: |
           set -o pipefail
           mkdir -p docs/evidence
-          (node --version; compact --version; compact compile --version; npm run compile:hello; npm run compile) 2>&1 | tee docs/evidence/compile.txt
-          find managed -maxdepth 3 -type f
+          (node --version; compact --version; compact compile --version; npm run compile:hello; npm run compile; find managed -maxdepth 3 -type f) 2>&1 | tee docs/evidence/compile.txt
       - name: Typecheck and test compiled contract
         run: |
           set -o pipefail

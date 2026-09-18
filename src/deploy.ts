@@ -8,6 +8,7 @@
 import * as fs from 'node:fs';
 import { loadOrganizerState, loadStoragePassword } from './secrets';
 import { witnesses, type QuietCountPrivateState } from './witnesses';
+import type { Contract as CounterContract } from '../managed/counter/contract/index.js';
 import * as path from 'node:path';
 import { resolveNetwork, getOrCreateWallet, recordDeployment } from './network';
 import { createWallet, persistWalletState, unshieldedToken, type WalletContext } from './wallet';
@@ -96,9 +97,11 @@ async function loadCompiledContract() {
     );
   }
   const { Contract } = await import('../managed/counter/contract/index.js');
-  const contract = CompiledContract.make('counter', Contract<QuietCountPrivateState>);
-  return CompiledContract.withCompiledFileAssets(
-    CompiledContract.withWitnesses(contract, witnesses), zkConfigPath,
+  return CompiledContract.make<CounterContract<QuietCountPrivateState>>(
+    'counter', Contract<QuietCountPrivateState>,
+  ).pipe(
+    CompiledContract.withWitnesses(witnesses),
+    CompiledContract.withCompiledFileAssets(zkConfigPath),
   );
 }
 
