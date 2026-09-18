@@ -1,0 +1,13 @@
+v22.23.2
+compact 0.5.2
+0.31.1
+
+> quietcount-midnight@0.1.0 compile:hello
+> compact compile contracts/hello-world.compact managed/hello-world
+
+Compiling 1 circuits:
+
+> quietcount-midnight@0.1.0 compile
+> compact compile contracts/counter.compact managed/counter
+
+Compiling 1 circuits:

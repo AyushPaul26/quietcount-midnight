@@ -1,0 +1,11 @@
+
+> quietcount-midnight@0.1.0 build
+> tsc --noEmit
+
+src/deploy.ts(101,5): error TS2345: Argument of type 'CompiledContract<Contract<QuietCountPrivateState, Witnesses<QuietCountPrivateState>>, QuietCountPrivateState, CompiledAssetsPath>' is not assignable to parameter of type 'CompiledContract<Contract<unknown, Witnesses<unknown>>, unknown, unknown>'.
+  Type 'Witnesses<QuietCountPrivateState>' is not assignable to type 'Witnesses<unknown>'.
+    Property 'organizerSecret' is incompatible with index signature.
+      Type '(context: WitnessContext<Ledger, QuietCountPrivateState>) => [QuietCountPrivateState, Uint8Array<ArrayBufferLike>]' is not assignable to type 'Witness<unknown, any>'.
+        Types of parameters 'context' and 'context' are incompatible.
+          Type 'WitnessContext<any, unknown>' is not assignable to type 'WitnessContext<Ledger, QuietCountPrivateState>'.
+            Type 'unknown' is not assignable to type 'QuietCountPrivateState'.
