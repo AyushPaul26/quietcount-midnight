@@ -11,3 +11,19 @@ Compiling 1 circuits:
 > compact compile contracts/counter.compact managed/counter
 
 Compiling 1 circuits:
+managed/counter/contract/index.d.ts
+managed/counter/contract/index.js.map
+managed/counter/contract/index.js
+managed/counter/keys/increment.prover
+managed/counter/keys/increment.verifier
+managed/counter/zkir/increment.zkir
+managed/counter/zkir/increment.bzkir
+managed/counter/compiler/contract-info.json
+managed/hello-world/contract/index.d.ts
+managed/hello-world/contract/index.js.map
+managed/hello-world/contract/index.js
+managed/hello-world/keys/storeMessage.prover
+managed/hello-world/keys/storeMessage.verifier
+managed/hello-world/zkir/storeMessage.bzkir
+managed/hello-world/zkir/storeMessage.zkir
+managed/hello-world/compiler/contract-info.json

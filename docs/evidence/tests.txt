@@ -2,10 +2,60 @@
 > quietcount-midnight@0.1.0 build
 > tsc --noEmit
 
-src/deploy.ts(101,5): error TS2345: Argument of type 'CompiledContract<Contract<QuietCountPrivateState, Witnesses<QuietCountPrivateState>>, QuietCountPrivateState, CompiledAssetsPath>' is not assignable to parameter of type 'CompiledContract<Contract<unknown, Witnesses<unknown>>, unknown, unknown>'.
-  Type 'Witnesses<QuietCountPrivateState>' is not assignable to type 'Witnesses<unknown>'.
-    Property 'organizerSecret' is incompatible with index signature.
-      Type '(context: WitnessContext<Ledger, QuietCountPrivateState>) => [QuietCountPrivateState, Uint8Array<ArrayBufferLike>]' is not assignable to type 'Witness<unknown, any>'.
-        Types of parameters 'context' and 'context' are incompatible.
-          Type 'WitnessContext<any, unknown>' is not assignable to type 'WitnessContext<Ledger, QuietCountPrivateState>'.
-            Type 'unknown' is not assignable to type 'QuietCountPrivateState'.
+
+> quietcount-midnight@0.1.0 test
+> tsx --test tests/*.test.ts
+
+TAP version 13
+# Subtest: QuietCount compiled Compact contract
+    # Subtest: initializes a zero counter and a stable commitment
+    ok 1 - initializes a zero counter and a stable commitment
+      ---
+      duration_ms: 45.60559
+      type: 'test'
+      ...
+    # Subtest: increments once per authorized invocation without changing ownership
+    ok 2 - increments once per authorized invocation without changing ownership
+      ---
+      duration_ms: 37.459755
+      type: 'test'
+      ...
+    # Subtest: rejects an unauthorized witness before changing public state
+    ok 3 - rejects an unauthorized witness before changing public state
+      ---
+      duration_ms: 20.247393
+      type: 'test'
+      ...
+    # Subtest: binds each deployment to its own secret commitment
+    ok 4 - binds each deployment to its own secret commitment
+      ---
+      duration_ms: 21.741146
+      type: 'test'
+      ...
+    # Subtest: keeps the raw witness out of exported ledger fields and circuit results
+    ok 5 - keeps the raw witness out of exported ledger fields and circuit results
+      ---
+      duration_ms: 12.163054
+      type: 'test'
+      ...
+    # Subtest: copies private input and rejects invalid-length secrets
+    ok 6 - copies private input and rejects invalid-length secrets
+      ---
+      duration_ms: 0.306694
+      type: 'test'
+      ...
+    1..6
+ok 1 - QuietCount compiled Compact contract
+  ---
+  duration_ms: 138.733132
+  type: 'suite'
+  ...
+1..1
+# tests 6
+# suites 1
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 446.170734
