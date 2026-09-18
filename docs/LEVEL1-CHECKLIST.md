@@ -8,10 +8,10 @@ Active period: September Challenge, displayed as 1 September–1 October. The su
 - [x] README with initial product idea, privacy model, stack, prerequisites, setup, and test commands.
 - [x] At least three meaningful tests written against generated contract execution.
 - [x] Genuine successful `compact compile` output.
-- [x] Passing test execution and typecheck (six compiled-contract tests passed locally).
+- [x] Passing test execution and typecheck (six compiled-contract tests passed locally and in Linux CI).
 - [x] Generated `managed/` circuits and keys checked in.
 - [ ] Custom contract deployed to Preview/Preprod and confirmed address in README.
-- [ ] Compile screenshot showing circuit list.
+- [x] Compile screenshot showing circuit list.
 - [ ] Deployment screenshot showing custom contract address.
 - [x] At least five meaningful commits published.
 - [ ] Repository selected in Rise In and submitted for the September Challenge.

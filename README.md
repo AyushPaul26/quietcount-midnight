@@ -65,7 +65,7 @@ npm run build                    # typecheck; failures are not suppressed
 npm test
 ```
 
-`managed/` contains compiler-generated JavaScript/types, circuit IR, and proving/verification keys. These keys are public circuit artifacts, **not** wallet private keys. Do not manually edit generated code. The validation workflow records the real compile and test logs under `docs/evidence/` after a successful run.
+`managed/` contains compiler-generated JavaScript/types, circuit IR, and proving/verification keys. These keys are public circuit artifacts, **not** wallet private keys. Do not manually edit generated code. The validation workflow preserves the actual compiler and test output under `docs/evidence/`; check the recorded result rather than assuming a log file means success.
 
 ## Run Tests
 
@@ -91,7 +91,13 @@ Keep `.midnight-state.json`, `.quietcount-secrets.json`, `.midnight-wallet-state
 
 ## Screenshots and Evidence
 
-Compile and deployment screenshots will be added after the actual operations succeed. Current work is incomplete until both screenshots and the confirmed custom contract address are present. No screenshot or address is simulated.
+The [successful Linux validation run](https://github.com/AyushPaul26/quietcount-midnight/actions/runs/35385025295) compiled both contracts with Compact 0.31.1, generated proving and verification keys, passed TypeScript checking, and passed all **six tests** on Node 22.23.2. The [compile log](docs/evidence/compile.txt) lists the generated circuits and keys; the [test log](docs/evidence/tests.txt) records six passes and zero failures.
+
+![Successful compiler output and generated circuits](docs/evidence/compile-success.png)
+
+![GitHub Actions validation succeeded](docs/evidence/validation-success.png)
+
+Deployment evidence is still pending. The Windows development computer needs a Linux proof-server environment before the confirmed custom contract address and deployment screenshot can be added. Level 1 has not been submitted.
 
 ## Project Structure
 
