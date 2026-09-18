@@ -1,0 +1,35 @@
+/**
+ * QuietCount: an organizer-authorized aggregate counter.
+ * PUBLIC: count and a domain-separated hash of the organizer's secret.
+ * PRIVATE: the 32-byte organizerSecret witness; it is never written to the
+ * ledger, returned, or sent to another contract. The increment proof shows
+ * knowledge of the secret matching the public commitment.
+ * disclose() permits publishing ONLY the derived commitment in the constructor.
+ * This proves authority to count, not that real people attended an event.
+ */
+pragma language_version 0.23;
+
+import CompactStandardLibrary;
+
+export ledger count: Counter;
+export ledger organizer: Bytes<32>;
+
+witness organizerSecret(): Bytes<32>;
+
+constructor() {
+  organizer = disclose(organizerCommitment(organizerSecret()));
+}
+
+circuit organizerCommitment(secret: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([
+    pad(32, "quietcount:organizer:v1"), secret
+  ]);
+}
+
+export circuit increment(): [] {
+  assert(
+    organizer == organizerCommitment(organizerSecret()),
+    "Only the authorized organizer may increment"
+  );
+  count.increment(1);
+}
